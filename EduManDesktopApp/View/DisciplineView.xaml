@@ -1,0 +1,475 @@
+﻿<UserControl x:Class="EduManDesktopApp.View.DisciplineView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:model="clr-namespace:EduManModel.Dtos;assembly=EduManModel"
+             xmlns:uc="clr-namespace:MyControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource DisplayTextBlock}"/>
+        <Style TargetType="StackPanel" x:Key="Wrap">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+        <Style TargetType="ListBoxItem" BasedOn="{StaticResource DisplayListBox}">
+        </Style>
+
+        <Style TargetType="TextBox" BasedOn="{StaticResource DisplayTextbox}"/>
+        <Style TargetType="{x:Type Grid}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding LevelFocused}" Value="True">
+                    <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=txtLevelName}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type uc:ReadOnlyDatePicker}"
+               BasedOn="{StaticResource MyDatePicker}">
+            <Setter Property="Margin" Value="10,3"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Times New Roman"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="3" />
+            <ColumnDefinition Width="4*" />
+        </Grid.ColumnDefinitions>
+        
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="3" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Style="{StaticResource Card}">
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0">
+                        <TextBlock Text="NHÓM NỀN NẾP" Style="{StaticResource TitleTextBlock}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="35" />
+                                <ColumnDefinition Width="35" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Tên nhóm" />
+                            <TextBox Grid.Column="1"
+                                        Text="{Binding InputDisciplineGroup.DisciplineGroupName, UpdateSourceTrigger=PropertyChanged}"
+                                        IsReadOnly="{Binding DisciplineGroupSaved}"/>
+                            <Button Grid.Column="2" Width="30" Height="30" HorizontalAlignment="Center" VerticalContentAlignment="Center"
+                                    Command="{Binding AddDisciplineGroupCommand}">
+                                <Image Stretch="Uniform" Margin="0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Setter Property="Source" Value="\EduManDesktopApp;component\assets\images\add.png"/>
+                                            <Setter Property="ToolTip" Value="Thêm" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding DisciplineGroupSaved}" Value="False">
+                                                    <Setter Property="Source" Value="\EduManDesktopApp;component\assets\images\save.png"/>
+                                                    <Setter Property="ToolTip" Value="Lưu" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                            </Button>
+                            <Button Grid.Column="3" Width="30" Height="30" HorizontalAlignment="Center" VerticalContentAlignment="Center"
+                                    Command="{Binding EditDisciplineGroupCommand}">
+                                <Image Stretch="Uniform" Margin="0,0">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Setter Property="Source" Value="\EduManDesktopApp;component\assets\images\edit.png"/>
+                                            <Setter Property="ToolTip" Value="Sửa" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding DisciplineGroupSaved}" Value="False">
+                                                    <Setter Property="Source" Value="\EduManDesktopApp;component\assets\images\refresh.png"/>
+                                                    <Setter Property="ToolTip" Value="Hủy" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                    <ListBox Grid.Row="1"
+                             ItemsSource="{Binding DisciplineGroups}"                             
+                             SelectedItem="{Binding SelectedDisciplineGroup}"
+                             BorderBrush="Transparent">                        
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type model:DtoDisciplineGroup}">
+                                <Border Background="{StaticResource LightMasterClorBrush}"
+                                        HorizontalAlignment="Stretch"
+                                        Padding="5,3">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="35" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding DisciplineGroupName}" VerticalAlignment="Center"/>
+                                        <Button Width="30" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                                Grid.Column="1"
+                                                Command="{Binding Path=DataContext.DeleteDisciplineGroupCommand, 
+                                                RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                CommandParameter="{Binding Id}">
+                                            <TextBlock Text="&#xE624;" FontFamily="Segoe MDL2 Assets"
+                                                       Margin="0" FontSize="12"
+                                                       TextAlignment="Center"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       Foreground="Red"/>
+                                        </Button>
+                                        <!--<Button Width="30" Height="30" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                                           Grid.Column="1"
+                                                           Command="{Binding Path=DataContext.DeleteDisciplineGroupCommand, 
+                                                           RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                           CommandParameter="{Binding Id}">
+                                            <Image Stretch="Uniform" ToolTip="Xóa" Margin="0,0" Source="\EduManDesktopApp;component\assets\images\delete.png"/>
+                                        </Button>-->
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Border>
+            <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            <Border Grid.Row="2" Style="{StaticResource Card}">
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0">
+                        <TextBlock Text="KIỂU NỀN NẾP" Style="{StaticResource TitleTextBlock}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="35" />
+                                <ColumnDefinition Width="35" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Tên kiểu" />
+                            <TextBox Grid.Column="1" 
+                                         Text="{Binding InputDisciplineType.DisciplineTypeName, UpdateSourceTrigger=PropertyChanged}"
+                                         IsReadOnly="{Binding DisciplineTypeSaved}"/>
+                            <Button Grid.Column="2" Width="30" Height="30" VerticalContentAlignment="Center"
+                                        Command="{Binding AddDisciplineTypeCommand}">
+                                <Image Stretch="Uniform" Margin="0,0">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Setter Property="Source" Value="\EduManDesktopApp;component\assets\images\add.png"/>
+                                            <Setter Property="ToolTip" Value="Thêm" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding DisciplineTypeSaved}" Value="False">
+                                                    <Setter Property="Source" Value="\EduManDesktopApp;component\assets\images\save.png"/>
+                                                    <Setter Property="ToolTip" Value="Lưu" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                            </Button>
+                            <Button Grid.Column="3" Width="30" Height="30" VerticalContentAlignment="Center"
+                                        Command="{Binding EditDisciplineTypeCommand}">
+                                <Image Stretch="Uniform" Margin="0,0">
+                                    <Image.Style>
+                                        <Style TargetType="{x:Type Image}">
+                                            <Setter Property="Source" Value="\EduManDesktopApp;component\assets\images\edit.png"/>
+                                            <Setter Property="ToolTip" Value="Sửa" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding DisciplineTypeSaved}" Value="False">
+                                                    <Setter Property="Source" Value="\EduManDesktopApp;component\assets\images\refresh.png"/>
+                                                    <Setter Property="ToolTip" Value="Hủy" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                    <ListBox Grid.Row="1"
+                             ItemsSource="{Binding DisciplineTypes}"
+                             SelectedItem="{Binding SelectedDisciplineType}"
+                             BorderBrush="Transparent">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type model:DtoDisciplineType}">
+                                <Border Background="{StaticResource LightMasterClorBrush}"
+                                        HorizontalAlignment="Stretch"
+                                        Padding="5,3">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="40" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding DisciplineTypeName}" VerticalAlignment="Center"/>
+                                        <Button Width="30" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                                Grid.Column="1"
+                                                Command="{Binding Path=DataContext.DeleteDisciplineTypeCommand, 
+                                                RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                CommandParameter="{Binding Id}">
+                                            <TextBlock Text="&#xE624;" FontFamily="Segoe MDL2 Assets"
+                                                       Margin="0" FontSize="12"
+                                                       TextAlignment="Center"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       Foreground="Red"/>
+                                        </Button>
+                                        <!--<Button Width="30" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                                Grid.Column="1"
+                                                Command="{Binding Path=DataContext.DeleteDisciplineTypeCommand, 
+                                                RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                CommandParameter="{Binding Id}">
+                                            <Image Stretch="Uniform" ToolTip="Xóa" Margin="0,0" Source="\EduManDesktopApp;component\assets\images\delete.png"/>
+                                        </Button>-->
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="190" />
+                <RowDefinition Height="3" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Style="{StaticResource Card}">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Nền nếp" />
+                            <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Text="{Binding InputDiscipline.DisciplineName, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding DisciplineSaved}" />
+                            <TextBlock Grid.Row="0" Grid.Column="4" Text="Nhóm nền nếp" />
+                            <uc:ReadOnlyComboBox Margin="10,5"
+                                         Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="3"
+                                         ItemsSource="{Binding CboDisciplineGroups}"
+                                         SelectedItem="{Binding CboDisciplineGroup}"
+                                         IsTextSearchEnabled="True"
+                                         TextSearch.TextPath="DisciplineGroupName"
+                                         VerticalContentAlignment="Center"
+                                         FontSize="16" Padding="0,2,0,2"
+                                         IsEditable="True" 
+                                         IsReadOnly="{Binding DisciplineSaved}">
+                                <uc:ReadOnlyComboBox.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type model:DtoDisciplineGroup}">
+                                        <TextBlock Text="{Binding DisciplineGroupName}"/>
+                                    </DataTemplate>
+                                </uc:ReadOnlyComboBox.ItemTemplate>
+                            </uc:ReadOnlyComboBox>
+                            <!--<TextBox Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="3" Text="{Binding InputDiscipline.DisciplineGroupId, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding DisciplineSaved}" />-->
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Áp dụng" />
+                            <uc:ReadOnlyComboBox Grid.Row="1" Grid.Column="1" Height="30"
+                                                 Margin="10,5" FontSize="14" VerticalAlignment="Center" VerticalContentAlignment="Center"
+                                                 FontFamily="Times New Roman"
+                                                 SelectedIndex="{Binding InputDiscipline.ApplyFor, UpdateSourceTrigger=PropertyChanged}" 
+                                                 IsReadOnly="{Binding DisciplineSaved}">
+                                <ComboBoxItem Content="Cả hai"></ComboBoxItem>
+                                <ComboBoxItem Content="Lớp học"></ComboBoxItem>
+                                <ComboBoxItem Content="Học sinh"></ComboBoxItem>
+                            </uc:ReadOnlyComboBox>
+                            <!--<TextBox Grid.Row="1" Grid.Column="1" Text="{Binding InputDiscipline.ApplyFor, Converter={StaticResource ApplyForConverter}, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding DisciplineSaved}" />-->
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="Điểm cộng" />
+                            <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding InputDiscipline.PlusPoint, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding DisciplineSaved}" />
+                            <TextBlock Grid.Row="1" Grid.Column="4" Text="Điểm trừ" />
+                            <TextBox Grid.Row="1" Grid.Column="5" Text="{Binding InputDiscipline.MinusPoint, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding DisciplineSaved}" />
+                            <TextBlock Grid.Row="1" Grid.Column="6" Text="Hiển thị" />
+                            <CheckBox Grid.Row="1" Grid.Column="7" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" IsChecked="{Binding InputDiscipline.Display, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Kiểu nền nếp" />
+                            <uc:ReadOnlyComboBox Margin="10,5"
+                                         Grid.Row="2" Grid.Column="1"
+                                         ItemsSource="{Binding CboDisciplineTypes}"
+                                         SelectedItem="{Binding CboDisciplineType}"
+                                         IsTextSearchEnabled="True"
+                                         TextSearch.TextPath="DisciplineTypeName"
+                                         VerticalContentAlignment="Center"
+                                         FontSize="16" Padding="0,2,0,2"
+                                         IsEditable="True" 
+                                         IsReadOnly="{Binding DisciplineSaved}">                                
+                                <uc:ReadOnlyComboBox.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type model:DtoDisciplineType}">
+                                        <TextBlock Text="{Binding DisciplineTypeName}"/>
+                                    </DataTemplate>
+                                </uc:ReadOnlyComboBox.ItemTemplate>
+                            </uc:ReadOnlyComboBox>
+                            <!--<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding InputDiscipline.DisciplineTypeId, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding DisciplineSaved}" />-->
+                            <TextBlock Grid.Row="2" Grid.Column="2" Text="Thứ tự" />
+                            <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding InputDiscipline.SequenceNumber, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding DisciplineSaved}" />
+                            <TextBlock Grid.Row="2" Grid.Column="4" Text="Ghi chú" />
+                            <TextBox Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="3" Text="{Binding InputDiscipline.Note, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding DisciplineSaved}" />
+                        </Grid>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,10">
+                            <Button Width="65" Height="26" VerticalContentAlignment="Center" 
+                                Command="{Binding AddDisciplineCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Height="16" Margin="0,0">
+                                        <Image.Style>
+                                            <Style TargetType="{x:Type Image}">
+                                                <Setter Property="Source" Value="\EduManDesktopApp;component\assets\images\add.png"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding DisciplineSaved}" Value="False">
+                                                        <Setter Property="Source" Value="\EduManDesktopApp;component\assets\images\save.png"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                    <TextBlock VerticalAlignment="Center" Margin="5">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Text" Value="Thêm"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding DisciplineSaved}" Value="False">
+                                                        <Setter Property="Text" Value="Lưu"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button Width="65" Height="26" VerticalContentAlignment="Center"
+                                Command="{Binding EditDisciplineCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Height="16" Margin="0,0">
+                                        <Image.Style>
+                                            <Style TargetType="{x:Type Image}">
+                                                <Setter Property="Source" Value="\EduManDesktopApp;component\assets\images\edit.png"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding DisciplineSaved}" Value="False">
+                                                        <Setter Property="Source" Value="\EduManDesktopApp;component\assets\images\refresh.png"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                    <TextBlock VerticalAlignment="Center" Margin="5">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Text" Value="Sửa"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding DisciplineSaved}" Value="False">
+                                                        <Setter Property="Text" Value="Hủy"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button Width="65" Height="26" VerticalContentAlignment="Center"
+                                Command="{Binding DeleteDisciplineCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Height="16" Margin="0,0"
+                                       Source="\EduManDesktopApp;component\assets\images\delete.png"/>
+                                    <TextBlock VerticalAlignment="Center" Margin="5">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text" Value="Xóa"/>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+            <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="350" />
+                    <ColumnDefinition Width="180" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="95" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="75" />
+                    <ColumnDefinition Width="110" />
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="350" />
+                    <ColumnDefinition Width="80" />
+                </Grid.ColumnDefinitions>
+                <Border x:Name="col0" Grid.Column="0" />
+                <Border x:Name="col1" Grid.Column="1" />
+                <Border x:Name="col2" Grid.Column="2" />
+                <Border x:Name="col3" Grid.Column="3" />
+                <Border x:Name="col4" Grid.Column="4" />
+                <Border x:Name="col5" Grid.Column="5" />
+                <Border x:Name="col6" Grid.Column="6" />
+                <Border x:Name="col7" Grid.Column="7" />
+                <Border x:Name="col8" Grid.Column="8" />
+                <Border x:Name="col9" Grid.Column="9" />
+            </Grid>
+            <ListView Grid.Row="2"
+                      Margin="5"
+                      ItemsSource="{Binding Disciplines}"
+                      SelectedItem="{Binding SelectedDiscipline}" >
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Nền nếp" DisplayMemberBinding="{Binding DisciplineName}" Width="{Binding ActualWidth, ElementName=col0}" />
+                        <GridViewColumn Header="Nhóm nền nếp" DisplayMemberBinding="{Binding DisciplineGroupId, Converter={StaticResource DisciplineGroupConverter}}" Width="{Binding ActualWidth, ElementName=col1}" />
+                        <GridViewColumn Header="Áp dụng" DisplayMemberBinding="{Binding ApplyFor, Converter={StaticResource ApplyForConverter}}" Width="{Binding ActualWidth, ElementName=col2}" />
+                        <GridViewColumn Header="Điểm cộng" DisplayMemberBinding="{Binding PlusPoint}" Width="{Binding ActualWidth, ElementName=col3}" />
+                        <GridViewColumn Header="Điểm trừ" DisplayMemberBinding="{Binding MinusPoint}" Width="{Binding ActualWidth, ElementName=col4}" />
+                        <GridViewColumn Header="Hiển thị" DisplayMemberBinding="{Binding Display, Converter={StaticResource DisplayConverter}}" Width="{Binding ActualWidth, ElementName=col5}" />
+                        <GridViewColumn Header="Kiểu nền nếp" DisplayMemberBinding="{Binding DisciplineTypeId, Converter={StaticResource DisciplineTypeConverter}}" Width="{Binding ActualWidth, ElementName=col6}" />
+                        <GridViewColumn Header="Thứ tự" DisplayMemberBinding="{Binding SequenceNumber}" Width="{Binding ActualWidth, ElementName=col7}" />
+                        <GridViewColumn Header="Ghi chú" DisplayMemberBinding="{Binding Note}" Width="{Binding ActualWidth, ElementName=col8}" />
+                        <GridViewColumn Header="Thao tác" Width="{Binding ActualWidth,ElementName=col9}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate DataType="{x:Type model:DtoDiscipline}">
+                                    <Button Width="30" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                            Grid.Column="1"
+                                            Command="{Binding Path=DataContext.DeleteDisciplineCommand, 
+                                            RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding Id}">
+                                        <TextBlock Text="&#xE624;" FontFamily="Segoe MDL2 Assets"
+                                                   Margin="0" FontSize="12"
+                                                   TextAlignment="Center"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="Red"/>
+                                    </Button>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </Grid>
+</UserControl>

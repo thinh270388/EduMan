@@ -1,0 +1,126 @@
+﻿<Window x:Class="EduManDesktopApp.View.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EduManDesktopApp.View"
+        xmlns:uc="clr-namespace:MyControl"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        AllowsTransparency="True"
+        ShowInTaskbar="False"
+        Title="LoginWindow" Height="450" Width="300"
+        x:Name="loginWindow">
+    <Window.Resources>
+        <Style TargetType="Grid">
+            <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=txtUser}"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Border CornerRadius="0,0,15,15"
+                Background="{StaticResource LightMasterClorBrush}"
+                BorderBrush="Transparent"
+                Margin="3"
+                BorderThickness="0.5">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="13" 
+                                  ShadowDepth="0" 
+                                  Opacity=".4">                    
+                </DropShadowEffect>
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Image Source="\EduManDesktopApp;component\Assets\images\applogo.png"
+                       Margin="35"
+                       Grid.Row="0">                    
+                </Image>
+                <StackPanel Grid.Row="1">
+                    <Grid>
+                        <TextBox Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"                                 
+                                 FontSize="16"
+                                 x:Name="txtUser"                                 
+                                 Foreground="{StaticResource DarkMasterTextClBrush}"
+                                 Margin="30,5" 
+                                 Padding="22,2,0,2"
+                                 />
+                        <TextBlock Text="&#xEA8C;" FontFamily="Segoe MDL2 Assets"
+                                   Margin="35,10" FontSize="19"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   Foreground="{StaticResource DarkMasterTextClBrush}"
+                                   />            
+                    </Grid>
+                    <Grid>
+                        <PasswordBox Margin="30,5"  
+                                     x:Name="txtPassword"
+                                     FontSize="16"
+                                     Foreground="{StaticResource DarkMasterTextClBrush}"
+                                     Padding="22,2,0,2"
+                                     />
+                        <TextBlock Text="&#xE8D7;" 
+                                   FontFamily="Segoe MDL2 Assets"
+                                   Margin="35,10" FontSize="19"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Foreground="{StaticResource DarkMasterTextClBrush}"
+                                   />
+                    </Grid>
+                    <Grid Margin="0.5">
+                        <Border>
+                            <uc:ReadOnlyComboBox Margin="30,0"
+                                                 ItemsSource="{Binding DataList}"
+                                                 VerticalContentAlignment="Center"
+                                                 FontSize="16" Padding="0,2,0,2"
+                                                 IsEditable="True" 
+                                                 IsTextSearchEnabled="True"
+                                                 IsReadOnly="True"/>   
+                        </Border>
+                    </Grid>
+                    <Grid Margin="0,5">
+                        <CheckBox Content="Nhớ mật khẩu"
+                                  IsChecked="{Binding Remember}"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"
+                                  FontSize="14"
+                                  Foreground="{StaticResource DarkMasterTextClBrush}"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="2"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">       
+                    <Button Command="{Binding LoginCommand}"
+                            Height="32" Width="100"
+                            Foreground="{StaticResource DarkMasterTextClBrush}"
+                            VerticalContentAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="\EduManDesktopApp;component\Assets\images\login.png"
+                                   Height="16" Margin="2"/>
+                            <TextBlock Text="Đăng nhập" 
+                                       VerticalAlignment="Center"
+                                       Margin="5,3"
+                                       FontStyle="Normal"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding ExitCommand}"
+                            x:Name="btnLogin"
+                            Height="32" Width="100"
+                            Foreground="{StaticResource DarkMasterTextClBrush}"
+                            VerticalContentAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="\EduManDesktopApp;component\Assets\images\exit.png"
+                                    Height="16" Margin="2"/>
+                            <TextBlock Text="Thoát" VerticalAlignment="Center"
+                                       Margin="15,3"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

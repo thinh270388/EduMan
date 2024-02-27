@@ -1,0 +1,432 @@
+﻿<UserControl x:Class="EduManDesktopApp.View.StartWeekView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EduManDesktopApp.View"
+             xmlns:model="clr-namespace:EduManModel.Dtos;assembly=EduManModel"
+             xmlns:uc="clr-namespace:MyControl"
+             xmlns:slhelper="clr-namespace:SLHelper;assembly=SLHelper"
+             mc:Ignorable="d" 
+             d:DesignHeight="650" d:DesignWidth="1200">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource DisplayTextBlock}"/>
+        <Style TargetType="StackPanel" x:Key="Wrap">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+        <Style TargetType="ListBoxItem" BasedOn="{StaticResource DisplayListBox}">
+        </Style>
+
+        <Style TargetType="TextBox" BasedOn="{StaticResource DisplayTextbox}"/>
+        <Style TargetType="{x:Type Grid}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding LevelFocused}" Value="True">
+                    <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=txtLevelName}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type uc:ReadOnlyDatePicker}"
+               BasedOn="{StaticResource MyDatePicker}">
+            <Setter Property="Margin" Value="10,3"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="{StaticResource FontSizeDefault}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="{StaticResource FontFamilyDefault}"/>
+        </Style>
+
+        <Style TargetType="{x:Type GridViewColumnHeader}">
+            <!--<Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                        <Border BorderThickness="0,0,0,1" BorderBrush="Black" Background="Transparent">
+                            <TextBlock x:Name="ContentHeader" Text="{TemplateBinding Content}" Padding="5,5,5,0" Width="{TemplateBinding Width}" TextAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Foreground" Value="Black" />-->
+            <Setter Property="FontFamily" Value="{StaticResource FontFamilyDefault}" />
+            <Setter Property="FontSize" Value="{StaticResource FontSizeDefault}" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="3" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Border Grid.Row="0" Style="{StaticResource Card}">
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="190" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Grid.ColumnSpan="2">
+                        <TextBlock Text="NĂM HỌC" Style="{StaticResource TitleTextBlock}"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Năm học" />
+                            <TextBox Grid.Row="0" Grid.Column="1"
+                                        Text="{Binding InputStartWeek.OnYear, UpdateSourceTrigger=PropertyChanged}"
+                                        IsReadOnly="{Binding StartWeekSaved}" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Ngày bắt đầu" />
+                            <uc:ReadOnlyDatePicker Grid.Column="1" Grid.Row="1" Height="30" SelectedDate="{Binding InputStartWeek.StartDate,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding StartWeekSaved}" />
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Sử dụng" />
+                            <CheckBox Grid.Row="2" Grid.Column="1" Height="30" IsChecked="{Binding InputStartWeek.Used, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0" Padding="0,10,0,0" />
+                        </Grid>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,10">
+                            <Button Width="65" Height="26" VerticalContentAlignment="Center" Background="LightYellow"
+                                Command="{Binding AddStartWeekCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Height="16" Margin="0,0">
+                                        <Image.Style>
+                                            <Style TargetType="{x:Type Image}">
+                                                <Setter Property="Source" Value="\EduManDesktopApp;component\assets\images\add.png"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding StartWeekSaved}" Value="False">
+                                                        <Setter Property="Source" Value="\EduManDesktopApp;component\assets\images\save.png"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                    <TextBlock VerticalAlignment="Center" Margin="5">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Text" Value="Thêm"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding StartWeekSaved}" Value="False">
+                                                        <Setter Property="Text" Value="Lưu"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button Width="55" Height="26" VerticalContentAlignment="Center"  Background="LightYellow"
+                                Command="{Binding EditStartWeekCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Height="16" Margin="0,0">
+                                        <Image.Style>
+                                            <Style TargetType="{x:Type Image}">
+                                                <Setter Property="Source" Value="\EduManDesktopApp;component\assets\images\edit.png"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding StartWeekSaved}" Value="False">
+                                                        <Setter Property="Source" Value="\EduManDesktopApp;component\assets\images\refresh.png"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                    <TextBlock VerticalAlignment="Center" Margin="5">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Text" Value="Sửa"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding StartWeekSaved}" Value="False">
+                                                        <Setter Property="Text" Value="Hủy"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button Width="55" Height="26" VerticalContentAlignment="Center"  Background="LightYellow"
+                                Command="{Binding DeleteStartWeekCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Height="16" Margin="0,0"
+                                       Source="\EduManDesktopApp;component\assets\images\delete.png"/>
+                                    <TextBlock VerticalAlignment="Center" Margin="5">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text" Value="Xóa"/>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                    <ListBox Grid.Row="1"
+                             ItemsSource="{Binding StartWeeks}"                             
+                             SelectedItem="{Binding SelectedStartWeek}"
+                             BorderBrush="Transparent" Grid.ColumnSpan="2">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type model:DtoStartWeek}">
+                                <Border Background="{StaticResource LightMasterClorBrush}"
+                                        HorizontalAlignment="Stretch"
+                                        Padding="5,3">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{Binding OnYear}" VerticalAlignment="Center"/>
+                                        <DatePicker Grid.Column="1" Text="{Binding StartDate, StringFormat='{}{0:dd/MM/yyyy}'}" HorizontalAlignment="Center" Margin="10,0" />
+                                        <CheckBox Grid.Column="2" IsChecked="{Binding Used}" HorizontalAlignment="Right" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Border>
+        </Grid>
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="230" />
+                <RowDefinition Height="3" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Style="{StaticResource Card}">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Tên tuần" />
+                            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding InputWeekly.WeeklyName, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding WeeklySaved}" />
+                            <TextBlock Grid.Row="0" Grid.Column="2" Text="Năm học" />
+                            <uc:ReadOnlyComboBox Margin="10,5"
+                                      Grid.Row="0" Grid.Column="3"
+                                      ItemsSource="{Binding CboStartWeeks, UpdateSourceTrigger=PropertyChanged}"
+                                      SelectedItem="{Binding CboStartWeek, UpdateSourceTrigger=PropertyChanged}"
+                                      IsTextSearchEnabled="True"
+                                      TextSearch.TextPath="OnYear"
+                                      VerticalContentAlignment="Center"
+                                      FontSize="16" Padding="0,2,0,2"
+                                      IsEditable="True" 
+                                      IsReadOnly="{Binding WeeklySaved, UpdateSourceTrigger=PropertyChanged}">
+                                <uc:ReadOnlyComboBox.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type model:DtoStartWeek}">
+                                        <TextBlock Text="{Binding OnYear, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </uc:ReadOnlyComboBox.ItemTemplate>
+                            </uc:ReadOnlyComboBox>
+                            <TextBlock Grid.Row="0" Grid.Column="4" Text="Từ ngày" />
+                            <uc:ReadOnlyDatePicker Grid.Row="0" Grid.Column="5" SelectedDate="{Binding InputWeekly.FromDate, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding WeeklySaved}" />
+                            <TextBlock Grid.Row="0" Grid.Column="6" Text="Đến ngày" />
+                            <uc:ReadOnlyDatePicker Grid.Row="0" Grid.Column="7" SelectedDate="{Binding InputWeekly.ToDate, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding WeeklySaved}" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Số tiết" />
+                            <slhelper:NumericUpdown Grid.Row="1" Grid.Column="1" FontSize="{StaticResource FontSizeDefault}" Value="{Binding InputWeekly.NumberOfLession, UpdateSourceTrigger=PropertyChanged}" 
+                                                    IsReadOnly="{Binding WeeklySaved}" IsDecimal="False" CanType="{Binding WeeklySaved}"
+                                                    MinValue="0" MaxValue="100" Step="1" Height="30" Margin="10,5" />
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="Điểm ban đầu" />
+                            <slhelper:NumericUpdown Grid.Row="1" Grid.Column="3" FontSize="{StaticResource FontSizeDefault}" Value="{Binding InputWeekly.InitialPoint, UpdateSourceTrigger=PropertyChanged}" 
+                                                    IsReadOnly="{Binding WeeklySaved}" IsDecimal="False" CanType="{Binding WeeklySaved}"
+                                                    MinValue="0" MaxValue="1000" Step="10" Height="30" Margin="10,5" />
+                            <TextBlock Grid.Row="1" Grid.Column="4" Text="Hệ số" />
+                            <slhelper:NumericUpdown Grid.Row="1" Grid.Column="5" FontSize="{StaticResource FontSizeDefault}" Value="{Binding InputWeekly.Coefficient, UpdateSourceTrigger=PropertyChanged}" 
+                                                    IsReadOnly="{Binding WeeklySaved}" IsDecimal="False" CanType="{Binding WeeklySaved}"
+                                                    MinValue="1" MaxValue="10" Step="1" Height="30" Margin="10,5" />
+                                <TextBlock Grid.Row="1" Grid.Column="6" Text="Lớp trực" />
+                            <TextBox Grid.Row="1" Grid.Column="7" Text="{Binding InputWeekly.OnDutyClass, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding WeeklySaved}" />
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Đánh giá" />
+                            <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="7" Text="{Binding InputWeekly.Sumarizing, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding WeeklySaved}" />
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Kế hoạch" />
+                            <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="7" Text="{Binding InputWeekly.Planning, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="{Binding WeeklySaved}" />
+                        </Grid>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10,10">
+                            <Button Width="65" Height="30" VerticalContentAlignment="Center" 
+                                Command="{Binding AddWeeklyCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Height="22" Margin="0,0">
+                                        <Image.Style>
+                                            <Style TargetType="{x:Type Image}">
+                                                <Setter Property="Source" Value="\EduManDesktopApp;component\assets\images\add.png"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding WeeklySaved}" Value="False">
+                                                        <Setter Property="Source" Value="\EduManDesktopApp;component\assets\images\save.png"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                    <TextBlock VerticalAlignment="Center" Margin="5">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Text" Value="Thêm"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding WeeklySaved}" Value="False">
+                                                        <Setter Property="Text" Value="Lưu"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button Width="65" Height="30" VerticalContentAlignment="Center"
+                                Command="{Binding EditWeeklyCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Height="22" Margin="0,0">
+                                        <Image.Style>
+                                            <Style TargetType="{x:Type Image}">
+                                                <Setter Property="Source" Value="\EduManDesktopApp;component\assets\images\edit.png"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding WeeklySaved}" Value="False">
+                                                        <Setter Property="Source" Value="\EduManDesktopApp;component\assets\images\refresh.png"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                    <TextBlock VerticalAlignment="Center" Margin="5">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Text" Value="Sửa"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding WeeklySaved}" Value="False">
+                                                        <Setter Property="Text" Value="Hủy"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button Width="65" Height="30" VerticalContentAlignment="Center"
+                                Command="{Binding DeleteWeeklyCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Height="22" Margin="0,0"
+                                       Source="\EduManDesktopApp;component\assets\images\delete.png"/>
+                                    <TextBlock VerticalAlignment="Center" Margin="5">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text" Value="Xóa"/>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button Width="90" Height="30" VerticalContentAlignment="Center"
+                                Command="{Binding GenerateStartWeekCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Height="22" Margin="0,0"
+                                       Source="\EduManDesktopApp;component\assets\images\delete.png"/>
+                                    <TextBlock VerticalAlignment="Center" Margin="5">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text" Value="Tạo nhanh"/>                                                
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+            <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Border x:Name="col0" Grid.Column="0" />
+                <Border x:Name="col1" Grid.Column="1" />
+                <Border x:Name="col2" Grid.Column="2" />
+                <Border x:Name="col3" Grid.Column="3" />
+                <Border x:Name="col4" Grid.Column="4" />
+                <Border x:Name="col5" Grid.Column="5" />
+                <Border x:Name="col6" Grid.Column="6" />
+                <Border x:Name="col7" Grid.Column="7" />
+                <Border x:Name="col8" Grid.Column="8" />
+                <Border x:Name="col9" Grid.Column="9" />
+                <Border x:Name="col10" Grid.Column="10" />
+            </Grid>
+            <ListView Grid.Row="2"
+                      Margin="5"
+                      ItemsSource="{Binding Weeklys, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedItem="{Binding SelectedWeekly, UpdateSourceTrigger=PropertyChanged}" >
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="BorderBrush" Value="LightGray" />
+                        <Setter Property="BorderThickness" Value="0,0,0,1" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Tên tuần" DisplayMemberBinding="{Binding WeeklyName}" Width="{Binding ActualWidth, ElementName=col0}" />
+                        <GridViewColumn Header="Năm học" DisplayMemberBinding="{Binding StartWeekId, Converter={StaticResource StartWeekConverter}}" Width="{Binding ActualWidth, ElementName=col1}" />
+                        <GridViewColumn Header="Từ ngày" Width="{Binding ActualWidth, ElementName=col2}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding FromDate, StringFormat='{}{0:dd/MM/yyyy}'}" TextAlignment="Center" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Đến ngày" DisplayMemberBinding="{Binding ToDate, StringFormat='{}{0:dd/MM/yyyy}'}" Width="{Binding ActualWidth, ElementName=col3}" />
+                        <GridViewColumn Header="Số tiết" DisplayMemberBinding="{Binding NumberOfLession}" Width="{Binding ActualWidth, ElementName=col4}" />
+                        <GridViewColumn Header="Điểm ban đầu" DisplayMemberBinding="{Binding InitialPoint}" Width="{Binding ActualWidth, ElementName=col5}" />
+                        <GridViewColumn Header="Hệ số" DisplayMemberBinding="{Binding Coefficient}" Width="{Binding ActualWidth, ElementName=col6}" />
+                        <GridViewColumn Header="Lớp trực" DisplayMemberBinding="{Binding OnDutyClass}" Width="{Binding ActualWidth, ElementName=col7}" />
+                        <GridViewColumn Header="Đánh giá" DisplayMemberBinding="{Binding Sumarizing}" Width="{Binding ActualWidth, ElementName=col8}" />
+                        <GridViewColumn Header="Kế hoạch" DisplayMemberBinding="{Binding Planning}" Width="{Binding ActualWidth, ElementName=col9}" />
+                        <GridViewColumn Header="Thao tác" Width="{Binding ActualWidth,ElementName=col10}">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate DataType="{x:Type model:DtoWeekly}">
+                                    <Button Width="30" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                             Grid.Column="1"
+                                             Command="{Binding Path=DataContext.DeleteWeeklyCommand, 
+                                             RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                             CommandParameter="{Binding Id}">
+                                        <TextBlock Text="&#xE624;" FontFamily="Segoe MDL2 Assets"
+                                                    Margin="0" FontSize="12"
+                                                    TextAlignment="Center"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="Red"/>
+                                    </Button>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </Grid>
+</UserControl>

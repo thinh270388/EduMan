@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:syst="clr-namespace:System;assembly=mscorlib"
+                    >
+    <syst:Double x:Key="NormalSize">14</syst:Double>
+    <syst:Double x:Key="TitleSize">16</syst:Double>
+    <syst:Double x:Key="FontSizeDefault">14</syst:Double>
+    <syst:Double x:Key="FontSizeButton">13</syst:Double>
+
+    <!-- Tahoma, Arial, Times New Roman,  Calibri Light, Courier New, Segoe UI -->
+    <FontFamily x:Key="FontFamilyDefault">Tahoma</FontFamily>
+    <Color x:Key="BackgroundColorAdd">LightGreen</Color>
+    <Color x:Key="BackgroundColorEdit">LightYellow</Color>
+    <Color x:Key="BackgroundColorDelete">Orange</Color>
+    <Color x:Key="BackgroundColorSave">CornflowerBlue</Color>
+    <Color x:Key="BackgroundColorCancel">LightGreen</Color>
+</ResourceDictionary>

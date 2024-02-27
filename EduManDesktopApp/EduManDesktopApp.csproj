@@ -1,0 +1,76 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Documents\Data.xlsx" />
+    <None Remove="Assets\images\add.png" />
+    <None Remove="Assets\images\applogo.png" />
+    <None Remove="Assets\images\calendar.png" />
+    <None Remove="Assets\images\delete.png" />
+    <None Remove="Assets\images\edit.png" />
+    <None Remove="Assets\images\exit.png" />
+    <None Remove="Assets\images\login.png" />
+    <None Remove="Assets\images\refresh.png" />
+    <None Remove="Assets\images\restrict.png" />
+    <None Remove="Assets\images\save.png" />
+    <None Remove="Assets\images\school.png" />
+    <None Remove="Assets\images\student.png" />
+    <None Remove="Assets\images\subtract.png" />
+    <None Remove="Assets\images\teacher.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\Documents\Data.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ExcelDataReader" Version="3.6.0" />
+    <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Notification.Wpf" Version="8.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EduManModel\EduManModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="SLHelper">
+      <HintPath>..\..\WPF\WPFCourse\SLHelper\SLHelper\bin\Debug\net6.0-windows\SLHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="TextProcessing">
+      <HintPath>..\..\WPF\WPFCourse\Project\DisciplineManSolution\DisciplineMan\bin\Debug\net6.0-windows\TextProcessing.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\images\add.png" />
+    <Resource Include="Assets\images\applogo.png" />
+    <Resource Include="Assets\images\calendar.png" />
+    <Resource Include="Assets\images\delete.png" />
+    <Resource Include="Assets\images\edit.png" />
+    <Resource Include="Assets\images\exit.png" />
+    <Resource Include="Assets\images\login.png" />
+    <Resource Include="Assets\images\refresh.png" />
+    <Resource Include="Assets\images\restrict.png" />
+    <Resource Include="Assets\images\save.png" />
+    <Resource Include="Assets\images\school.png" />
+    <Resource Include="Assets\images\student.png" />
+    <Resource Include="Assets\images\subtract.png" />
+    <Resource Include="Assets\images\teacher.png" />
+  </ItemGroup>
+
+</Project>
