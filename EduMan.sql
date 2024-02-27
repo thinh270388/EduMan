@@ -1,7 +1,4 @@
-﻿USE master
-GO
-
-CREATE DATABASE EduMan
+﻿CREATE DATABASE EduMan
 GO
 
 USE EduMan

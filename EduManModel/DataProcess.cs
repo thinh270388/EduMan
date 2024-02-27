@@ -6,13 +6,11 @@ namespace EduManModel
 {
     public partial class DataProcess<T>
     {
-        string host = "http://localhost/";
-
         HttpClient client = new();
         public async Task<DtoResult<T>> GetAllAsync(T dto)
         {
             DtoResult<T> result = new();
-            string url = host + UrlGetAll[dto!.GetType()];
+            string url = UrlGetAll[dto!.GetType()];
             string responseContent;
             try
             {

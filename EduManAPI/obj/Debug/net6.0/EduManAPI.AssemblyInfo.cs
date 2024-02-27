@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EduManAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1eb589551e772ed46360056dfc3495ce8a68357e")]
 [assembly: System.Reflection.AssemblyProductAttribute("EduManAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EduManAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EduManModel")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+018efe7a432ad107f6188167ee40673e5f975e8c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("EduManModel")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EduManModel")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

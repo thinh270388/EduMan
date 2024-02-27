@@ -113,18 +113,18 @@ namespace EduManDesktopApp.ViewModel
                 {
                     rs.Tables.Add(tb);
                     rs.Sheets.Add(tb.TableName);
-                    //List<FieldAttribute> attribs = new();
-                    //foreach (DataColumn col in tb.Columns)
-                    //{
-                    //    FieldAttribute fieldAttribute = new()
-                    //    {
-                    //        FieldName = col.ColumnName,
-                    //        FieldType = col.DataType.ToString(),
-                    //        RealType = col.DataType
-                    //    };
-                    //    attribs.Add(fieldAttribute);
-                    //}
-                    //rs.FieldAttributes.Add(attribs);
+                    List<FieldAttribute> attribs = new();
+                    foreach (DataColumn col in tb.Columns)
+                    {
+                        FieldAttribute fieldAttribute = new()
+                        {
+                            FieldName = col.ColumnName,
+                            FieldType = col.DataType.ToString(),
+                            RealType = col.DataType
+                        };
+                        attribs.Add(fieldAttribute);
+                    }
+                    rs.FieldAttributes.Add(attribs);
                 }
                 return rs;
             }
@@ -447,6 +447,7 @@ namespace EduManDesktopApp.ViewModel
                     if (string.IsNullOrEmpty(fullName)) { ShowErrorDetail(indexRow, indexColumnName); return; }
 
                     bool? gender = Convert.IsDBNull(r["Giới tính"]) ? null : Convert.ToString(r["Giới tính"])!.ToUpper().Equals("NAM") ? true : false;
+
                     DateTime? birthday = null;
                     if (r["Ngày sinh"].GetType() == typeof(string))
                     {
@@ -460,9 +461,7 @@ namespace EduManDesktopApp.ViewModel
                     else if (r["Ngày sinh"].GetType() == typeof(DateTime))
                     {
                         birthday = (DateTime)r["Ngày sinh"];
-                    }    
-
-                    //try { birthday = Convert.ToDateTime(r["Ngày sinh"]); } catch (Exception) { birthday = DateTime.MinValue; }
+                    }
                     DtoStudent InputStudent = new()
                     {
                         Code = code,
@@ -770,12 +769,7 @@ namespace EduManDesktopApp.ViewModel
                 {
                     int index = ExcelRS.Sheets.IndexOf(value);
                     ExcelTable = ExcelRS.Tables[index];
-                    if (ExcelRS.FieldAttributes.Count > 0)
-                    {
-                        Fields = new(ExcelRS.FieldAttributes[index]);
-                    }
-                    else
-                        Fields = new();
+                    Fields = new(ExcelRS.FieldAttributes[index]);
                 }
             }
         }

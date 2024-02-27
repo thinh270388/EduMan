@@ -272,6 +272,8 @@ namespace EduManDesktopApp.ViewModel
         #region Methods
         async Task LoadClassDistribute()
         {
+            if (StartWeekUsed == null || StartWeekUsed.OnYear == null) return;
+
             DataProcess<DtoClassDistribute> dp = new();
             DtoResult<DtoClassDistribute> rs = await dp.FindAsync(new DtoClassDistribute() { OnYear = StartWeekUsed.OnYear });
             if (rs == null || (rs != null && rs.Message != "OK"))

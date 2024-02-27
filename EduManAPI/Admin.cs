@@ -2,9 +2,9 @@
 {
     public static class Admin
     {
-        public static string serverip = "zi5b8/09sOf/T5aUZsM3gw=="; //bacai.ddns.net
+        public static string serverip = "vLqFzm2PRa5/kIKt1px1NVT4utkUs9LMXKhw82Okm5U="; //bacai.ddns.net
         public static string user = "SJq+vIZDzmRrdz+SZ5r1OA==";
-        public static string pass = "LMhjmjWSL/QEjCV1S3kkoFexbi7HBa0gPXVwjVWCo5Q=";
+        public static string pass = "+9v7opRgyxB37tXEHa2izA==";
         public static string key = "khangnguyen";
     }
 }

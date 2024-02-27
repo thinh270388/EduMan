@@ -24,26 +24,9 @@ namespace EduManDesktopApp.ViewModel
     {
         public string Name { get; set; } = string.Empty;
     }
-    public class ConfigModify
+
+    public class Param
     {
-        public void WriteConfig(ConpanyInfo config)
-        {
-            string filepath = "./config.cfg";
-            string content = "";
-            Encryption encrypt = new();
-            using FileStream stream = File.Create(filepath);
-            content = JsonConvert.SerializeObject(config);
-            byte[] buffer = new UTF8Encoding(true).GetBytes(content);
-            stream.Write(buffer, 0, buffer.Length);
-        }
-        public ConpanyInfo? GetConfig(string filepath)
-        {
-            if (!File.Exists(filepath)) return null;
-            string content = File.ReadAllText(filepath);
-            Encryption encrypt = new();
-            //content = encrypt.Decrypt(content,"1234")
-            ConpanyInfo? config = JsonConvert.DeserializeObject<ConpanyInfo>(content);
-            return config;
-        }
+        public bool IsFirstRun { get; set; }
     }
 }

@@ -53,7 +53,7 @@ namespace EduManDesktopApp.View {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/EduManDesktopApp;component/view/welcomeview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/EduManDesktopApp;V1.0.0.0;component/view/welcomeview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\View\WelcomeView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

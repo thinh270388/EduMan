@@ -16,10 +16,10 @@ namespace EduManModel.Dtos
 			}
 			TypeList = new(){ "int", "int", "int", "int", "date", "int" };
 		}
-		public DtoStudentDiscipline(int? id, int? studentdistributeid, int? disciplineid, int? weeklyid, DateTime? ondate, int? times)
+		public DtoStudentDiscipline(int? id, int? studentid, int? disciplineid, int? weeklyid, DateTime? ondate, int? times)
 		{
 			Id = id;
-			StudentDistributeId = studentdistributeid;
+			StudentId = studentid;
 			DisciplineId = disciplineid;
 			WeeklyId = weeklyid;
 			OnDate = ondate;
@@ -27,7 +27,7 @@ namespace EduManModel.Dtos
 			TypeList = new(){ "int", "int", "int", "int", "date", "int" };
 		}
 		public int? Id { get; set; }
-		public int? StudentDistributeId { get; set; }
+		public int? StudentId { get; set; }
 		public int? DisciplineId { get; set; }
 		public int? WeeklyId { get; set; }
 		public DateTime? OnDate { get; set; }

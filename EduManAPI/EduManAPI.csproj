@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <Reference Include="TextProcessing">
-      <HintPath>..\EduManDesktopApp\TextProcessing.dll</HintPath>
+      <HintPath>..\TextProcessing.dll</HintPath>
     </Reference>
   </ItemGroup>
 

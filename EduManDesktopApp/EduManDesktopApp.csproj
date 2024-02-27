@@ -16,6 +16,8 @@
     <None Remove="Assets\images\edit.png" />
     <None Remove="Assets\images\exit.png" />
     <None Remove="Assets\images\login.png" />
+    <None Remove="Assets\images\Minus.png" />
+    <None Remove="Assets\images\Plus.png" />
     <None Remove="Assets\images\refresh.png" />
     <None Remove="Assets\images\restrict.png" />
     <None Remove="Assets\images\save.png" />
@@ -49,10 +51,10 @@
 
   <ItemGroup>
     <Reference Include="SLHelper">
-      <HintPath>..\..\WPF\WPFCourse\SLHelper\SLHelper\bin\Debug\net6.0-windows\SLHelper.dll</HintPath>
+      <HintPath>..\SLHelper.dll</HintPath>
     </Reference>
     <Reference Include="TextProcessing">
-      <HintPath>..\..\WPF\WPFCourse\Project\DisciplineManSolution\DisciplineMan\bin\Debug\net6.0-windows\TextProcessing.dll</HintPath>
+      <HintPath>..\TextProcessing.dll</HintPath>
     </Reference>
   </ItemGroup>
 
@@ -64,6 +66,7 @@
     <Resource Include="Assets\images\edit.png" />
     <Resource Include="Assets\images\exit.png" />
     <Resource Include="Assets\images\login.png" />
+    <Resource Include="Assets\images\Plus.png" />
     <Resource Include="Assets\images\refresh.png" />
     <Resource Include="Assets\images\restrict.png" />
     <Resource Include="Assets\images\save.png" />

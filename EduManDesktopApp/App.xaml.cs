@@ -51,7 +51,6 @@ namespace EduManDesktopApp
                 window?.DragMove();
         }
 
-
         private void MainWindow_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Window? window = sender as Window;

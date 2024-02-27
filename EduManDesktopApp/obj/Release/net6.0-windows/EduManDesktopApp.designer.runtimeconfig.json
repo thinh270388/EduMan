@@ -12,9 +12,8 @@
       }
     ],
     "additionalProbingPaths": [
-      "C:\\Users\\truon\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\truon\\.nuget\\packages",
-      "C:\\Program Files (x86)\\DevExpress 21.2\\Components\\Offline Packages",
+      "C:\\Users\\thinh\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\thinh\\.nuget\\packages",
       "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages",
       "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
     ],

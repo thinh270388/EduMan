@@ -62,7 +62,7 @@ namespace EduManAPI.Controllers
 					List<DtoStudentDiscipline> rs = dt.Rows.Cast<DataRow>().ToList().Select(x => new DtoStudentDiscipline
 					{
 						Id = x.Field<int?>("Id"),
-						StudentDistributeId = x.Field<int?>("StudentDistributeId"),
+						StudentId = x.Field<int?>("StudentId"),
 						DisciplineId = x.Field<int?>("DisciplineId"),
 						WeeklyId = x.Field<int?>("WeeklyId"),
 						OnDate = x.Field<DateTime?>("OnDate"),
@@ -117,7 +117,7 @@ namespace EduManAPI.Controllers
 				using (conn)
 				{
 					using SqlCommand cmd = new("StudentDisciplineAdd", conn) { CommandType = CommandType.StoredProcedure };
-					cmd.Parameters.AddWithValue("@StudentDistributeId", SqlDbType.Int).Value = StudentDiscipline.StudentDistributeId;
+					cmd.Parameters.AddWithValue("@StudentId", SqlDbType.Int).Value = StudentDiscipline.StudentId;
 					cmd.Parameters.AddWithValue("@DisciplineId", SqlDbType.Int).Value = StudentDiscipline.DisciplineId;
 					cmd.Parameters.AddWithValue("@WeeklyId", SqlDbType.Int).Value = StudentDiscipline.WeeklyId;
 					cmd.Parameters.AddWithValue("@OnDate", SqlDbType.Date).Value = StudentDiscipline.OnDate;
@@ -132,7 +132,7 @@ namespace EduManAPI.Controllers
 						List<DtoStudentDiscipline> rs = dt.Rows.Cast<DataRow>().ToList().Select(x => new DtoStudentDiscipline
 						{
 							Id = x.Field<int?>("Id"),
-							StudentDistributeId = x.Field<int?>("StudentDistributeId"),
+							StudentId = x.Field<int?>("StudentId"),
 							DisciplineId = x.Field<int?>("DisciplineId"),
 							WeeklyId = x.Field<int?>("WeeklyId"),
 							OnDate = x.Field<DateTime?>("OnDate"),
@@ -162,7 +162,7 @@ namespace EduManAPI.Controllers
 				{
 					using SqlCommand cmd = new("StudentDisciplineUpdate", conn) { CommandType = CommandType.StoredProcedure };
 					cmd.Parameters.AddWithValue("@Id", SqlDbType.Int).Value = StudentDiscipline.Id;
-					cmd.Parameters.AddWithValue("@StudentDistributeId", SqlDbType.Int).Value = StudentDiscipline.StudentDistributeId;
+					cmd.Parameters.AddWithValue("@StudentId", SqlDbType.Int).Value = StudentDiscipline.StudentId;
 					cmd.Parameters.AddWithValue("@DisciplineId", SqlDbType.Int).Value = StudentDiscipline.DisciplineId;
 					cmd.Parameters.AddWithValue("@WeeklyId", SqlDbType.Int).Value = StudentDiscipline.WeeklyId;
 					cmd.Parameters.AddWithValue("@OnDate", SqlDbType.Date).Value = StudentDiscipline.OnDate;

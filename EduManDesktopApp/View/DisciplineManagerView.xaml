@@ -67,8 +67,10 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="80" />
                                 </Grid.ColumnDefinitions>
                                 <Border x:Name="col1_0" Grid.Column="0" />
+                                <Border x:Name="col1_1" Grid.Column="1" />
                             </Grid>
                             <ListView Margin="5"
                                   ItemsSource="{Binding Discipline1s, UpdateSourceTrigger=PropertyChanged}"
@@ -83,6 +85,38 @@
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Nền nếp" DisplayMemberBinding="{Binding DisciplineName}" Width="{Binding ActualWidth, ElementName=col1_0}" />
+                                        <GridViewColumn Header="Thao tác" Width="{Binding ActualWidth,ElementName=col1_1}" >
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate DataType="{x:Type model:DtoClassDiscipline}">
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Button Width="30" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                                             Grid.Column="1"
+                                                             Command="{Binding Path=DataContext.DeleteClassDisciplineCommand, 
+                                                             RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                             CommandParameter="{Binding Id}" >
+                                                            <TextBlock Text="&#xE624;" FontFamily="Segoe MDL2 Assets"
+                                                                        Margin="0" FontSize="12"
+                                                                        TextAlignment="Center"
+                                                                        HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center"
+                                                                        Foreground="Green"/>
+                                                        </Button>
+                                                        <Button Width="30" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                                                             Grid.Column="1"
+                                                             Command="{Binding Path=DataContext.DeleteClassDisciplineCommand, 
+                                                             RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                             CommandParameter="{Binding Id}" >
+                                                            <TextBlock Text="&#xE624;" FontFamily="Segoe MDL2 Assets"
+                                                                        Margin="0" FontSize="12"
+                                                                        TextAlignment="Center"
+                                                                        HorizontalAlignment="Center"
+                                                                        VerticalAlignment="Center"
+                                                                        Foreground="Red"/>
+                                                        </Button>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
                                     </GridView>
                                 </ListView.View>
                             </ListView>
@@ -159,7 +193,7 @@
                                 </ListView.ItemContainerStyle>
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="Học sinh" DisplayMemberBinding="{Binding StudentId}" Width="{Binding ActualWidth, ElementName=col2_0}" />
+                                        <GridViewColumn Header="Học sinh" DisplayMemberBinding="{Binding StudentId, Converter={StaticResource StudentConverter}}" Width="{Binding ActualWidth, ElementName=col2_0}" />
                                     </GridView>
                                 </ListView.View>
                             </ListView>
@@ -194,7 +228,7 @@
                 </Grid>
                 <Border Grid.Row="1" Style="{StaticResource Card}">
                     <Grid>
-                        <Grid Margin="5">
+                        <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="180" />
                                 <ColumnDefinition Width="*" />
